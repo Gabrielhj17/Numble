@@ -24,6 +24,13 @@ function initializeGame() {
     const rows = document.querySelectorAll('.grid-row');
     const submitButtons = document.querySelectorAll('.submit-button');
 
+    // Enable editing for the first row
+    rows[0].querySelectorAll('.box').forEach(box => {
+        box.setAttribute('contenteditable', 'true');
+    });
+
+    rows[0].classList.add('editable-row'); // Add editable class
+
     // Add click event listeners to all submit buttons
     submitButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
@@ -35,16 +42,20 @@ function initializeGame() {
                 row.classList.remove('editable-row'); // Remove editable class
             });
 
-            // Enable editing for the next row
-            const nextRowIndex = (index + 1) % rows.length;
-            rows[nextRowIndex].querySelectorAll('.box').forEach(box => {
-                box.setAttribute('contenteditable', 'true');
-            });
+        // Enable editing for the next row
+        const nextRowIndex = (index + 1) % rows.length;
+        const nextRowBoxes = rows[nextRowIndex].querySelectorAll('.box');
+        nextRowBoxes.forEach((box, boxIndex) => {
+            box.setAttribute('contenteditable', 'true');
+            if (boxIndex === 0) {
+                box.focus();
+                box.click(); // Trigger click event on the first box
+            }
+        });
             rows[nextRowIndex].classList.add('editable-row'); // Add editable class
         });
     });
 }
 
 // Call the initializeGame function when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initializeGame);
-
+document.addEventListener('DOMContentLoaded', initializeGame); 
