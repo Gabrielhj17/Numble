@@ -22,7 +22,6 @@ h1 {
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(5, 100px);
     gap: 10px;
-    outline: 2px solid black;
 }
 
 .grid-row {
@@ -51,6 +50,38 @@ h1 {
     background: transparent;
 }
 
+/* CSS for Submit Button */
 .submit-container {
-    outline: 2px solid black;
+    justify-content: flex-end; /* Align the container to the right */
+    margin: 10%; /* Adjust margin as needed */
+    display: grid;
+    grid-template-columns: repeat(1, 100px);
+    grid-template-rows: repeat(5, 100px);
+    gap: 10px;
+}
+
+.submit-button {
+    background-color: #2ecc71; /* Green color */
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: none;
+    padding: 0; /* Remove default padding */
+}
+
+/* Additional styling for button hover effect */
+.submit-button:hover {
+    background-color: #27ae60; /* Darker green color on hover */
+}
+
+/* CSS for editable rows */
+.editable-row {
+    opacity: 1; /* Make editable rows fully visible */
+}
+
+/* CSS for non-editable boxes within non-editable rows */
+.grid-row:not(.editable-row) .box {
+    opacity: 0.5; /* Apply grayed-out effect */
+    pointer-events: none; /* Disable pointer events */
 }
