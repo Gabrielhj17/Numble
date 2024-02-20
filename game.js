@@ -15,10 +15,14 @@ function initializeGame() {
     // Function to handle submit button click
     submitButton.addEventListener('click', () => {
         const activeRow = document.querySelector('.grid-row.editable-row');
-        if (activeRow) {
+        if (isRowComplete(activeRow)) {
             disableEditingForRow(activeRow);
             const nextRow = activeRow.nextElementSibling || rows[0];
+            updateBoxColors(activeRow);
             enableEditingForRow(nextRow);
+        }
+        else {
+            return ;
         }
     });
 

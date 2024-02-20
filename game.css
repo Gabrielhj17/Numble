@@ -84,3 +84,7 @@ h1 {
     opacity: 0.5; /* Apply grayed-out effect */
     pointer-events: none; /* Disable pointer events */
 }
+
+.submitted-row {
+    opacity: 1;
+}
