@@ -1,60 +1,29 @@
-// Only allow one character to be entered into each box
-function limitCharacter(element, currentIndex, nextIndex) {
-    if (element.textContent.length > 1) {
-        element.textContent = element.textContent.slice(0, 1);
-        element.dispatchEvent(new KeyboardEvent('keydown', {tabKey: true}))
-    }
-
-    // Move cursor to the next adjacent box
-    if (element.textContent.length === 1 && nextIndex < element.parentElement.children.length) {
-        const nextBox = element.parentElement.children[nextIndex];
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.setStart(nextBox, 0);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        nextBox.focus();
-    }
-}
-
 // Function to initialize the game
 function initializeGame() {
-    // Get all the rows and submit buttons
     const rows = document.querySelectorAll('.grid-row');
-    const submitButtons = document.querySelectorAll('.submit-button');
+    const submitButton = document.querySelector('.submit-button');
 
-    // Enable editing for the first row
-    rows[0].querySelectorAll('.box').forEach(box => {
-        box.setAttribute('contenteditable', 'true');
-    });
-
-    rows[0].classList.add('editable-row'); // Add editable class
-
-    // Add click event listeners to all submit buttons
-    submitButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            // Disable editing for the current row
-            rows.forEach(row => {
-                row.querySelectorAll('.box').forEach(box => {
-                    box.setAttribute('contenteditable', 'false');
-                });
-                row.classList.remove('editable-row'); // Remove editable class
+    // Add input event listeners to limit character input
+    rows.forEach(row => {
+        row.querySelectorAll('.box').forEach(box => {
+            box.addEventListener('input', () => {
+                limitCharacter(box);
             });
-
-        // Enable editing for the next row
-        const nextRowIndex = (index + 1) % rows.length;
-        const nextRowBoxes = rows[nextRowIndex].querySelectorAll('.box');
-        nextRowBoxes.forEach((box, boxIndex) => {
-            box.setAttribute('contenteditable', 'true');
-            if (boxIndex === 0) {
-                box.focus();
-                box.click(); // Trigger click event on the first box
-            }
-        });
-            rows[nextRowIndex].classList.add('editable-row'); // Add editable class
         });
     });
+
+    // Function to handle submit button click
+    submitButton.addEventListener('click', () => {
+        const activeRow = document.querySelector('.grid-row.editable-row');
+        if (activeRow) {
+            disableEditingForRow(activeRow);
+            const nextRow = activeRow.nextElementSibling || rows[0];
+            enableEditingForRow(nextRow);
+        }
+    });
+
+    // Initialize the game by enabling editing for the first row
+    enableEditingForRow(rows[0]);
 }
 
 // Call the initializeGame function when the DOM is fully loaded

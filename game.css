@@ -54,13 +54,11 @@ h1 {
 .submit-container {
     justify-content: flex-end; /* Align the container to the right */
     margin: 10%; /* Adjust margin as needed */
-    display: grid;
-    grid-template-columns: repeat(1, 100px);
-    grid-template-rows: repeat(5, 100px);
-    gap: 10px;
 }
 
 .submit-button {
+    width: 100px; /* Same width as box */
+    height: 100px; /* Same height as box */
     background-color: #2ecc71; /* Green color */
     font-size: 24px;
     color: white;
@@ -68,6 +66,7 @@ h1 {
     box-sizing: border-box;
     border: none;
     padding: 0; /* Remove default padding */
+    position: relative; /* Added for positioning */
 }
 
 /* Additional styling for button hover effect */
