@@ -18,7 +18,6 @@ h1 {
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(5, 100px);
     gap: 10px;
-    border: 2px solid black;
 }
 
 .grid-row {
@@ -93,7 +92,6 @@ h1 {
     flex-direction: column;
     justify-content: flex-start; /* Align content to the top */
     align-items: center;
-    border: 2px solid black;
     margin-top: 5%; /* Adjust margin to create space between grids */
     height: 100vh;
 }
@@ -103,7 +101,6 @@ h1 {
     grid-template-columns: repeat(10, 100px);
     grid-template-rows: repeat(1, 100px);
     gap: 10px;
-    border: 2px solid black;
     margin-top: 5%;
 }
 
