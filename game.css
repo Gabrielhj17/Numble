@@ -118,3 +118,16 @@ h1 {
     position: relative; /* Added for positioning */
     border-radius: 15%;
 }
+
+/* Adjust font sizes for smaller screens */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* Ensure content scales properly on mobile devices */
+@viewport {
+    width: device-width;
+    zoom: 1.0;
+}
