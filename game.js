@@ -1,5 +1,8 @@
 // Function to initialize the game
 function initializeGame() {
+// Generate a random 4-digit number
+    const randomNumber = generateRandomNumber();
+
     const rows = document.querySelectorAll('.grid-row');
     const submitButton = document.querySelector('.submit-button');
 
@@ -18,7 +21,7 @@ function initializeGame() {
         if (isRowComplete(activeRow)) {
             disableEditingForRow(activeRow);
             const nextRow = activeRow.nextElementSibling || rows[0];
-            updateBoxColors(activeRow);
+            updateBoxColors(activeRow, randomNumber);
             enableEditingForRow(nextRow);
         }
         else {

@@ -8,43 +8,58 @@
 <script src="dependencies.js"></script>
 </head>
 <body>
-    <h1>Numble</h1>
+    <div class="container">
+        <h1>Numble</h1>
+        <div class="grid-container">
+            <div class="grid-row">
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
+            </div>
+            <div class="grid-row">
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
+            </div>
+            <div class="grid-row">
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
+            </div>
+            <div class="grid-row">
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
+            </div>
+            <div class="grid-row">
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
+                <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
+            </div>
+        </div>
 
-    <div class="grid-container">
-        <div class="grid-row">
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
+        <div class="number-grid">
+            <!-- Number grid to the left -->
+            <div class="number-box">0</div>
+            <div class="number-box">1</div>
+            <div class="number-box">2</div>
+            <div class="number-box">3</div>
+            <div class="number-box">4</div>
+            <div class="number-box">5</div>
+            <div class="number-box">6</div>
+            <div class="number-box">7</div>
+            <div class="number-box">8</div>
+            <div class="number-box">9</div>
         </div>
-        <div class="grid-row">
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
-        </div>
-        <div class="grid-row">
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
-        </div>
-        <div class="grid-row">
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
-        </div>
-        <div class="grid-row">
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 0, 1)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 1, 2)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 2, 3)"></div>
-            <div class="box" contenteditable="true" oninput="limitCharacter(this, 3, 4)"></div>
-        </div>
-    </div>
 
-    <div class="submit-container">
-        <button class="submit-button">Submit</button>
+        <div class="submit-container">
+            <button class="submit-button">Submit</button>
+        </div>
     </div>
 
 </body>
