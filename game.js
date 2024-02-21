@@ -45,4 +45,3 @@ function initializeGame() {
 
 // Call the initializeGame function when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initializeGame); 
-
