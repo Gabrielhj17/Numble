@@ -11,3 +11,4 @@ function moveCursor(element, nextIndex) {
         nextBox.focus();
     }
 }
+

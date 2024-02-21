@@ -105,15 +105,15 @@ h1 {
 }
 
 .number-box {
-    width: 100%;
-    height: 100%;
-    background-color: #3498db;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+     width: 100px; /* Same width as box */
+    height: 100px; /* Same height as box */
+    background-color: #3498db; /* Green color */
     font-size: 24px;
     color: white;
+    cursor: pointer;
     box-sizing: border-box;
-    caret-color: transparent;
+    border: none;
+    padding: 0; /* Remove default padding */
+    position: relative; /* Added for positioning */
     border-radius: 15%;
 }

@@ -23,9 +23,19 @@ function initializeGame() {
             const nextRow = activeRow.nextElementSibling || rows[0];
             updateBoxColors(activeRow, randomNumber);
             enableEditingForRow(nextRow);
+            const firstBox = element.parentElement.children[0];
+            firstBox.focus();
         }
         else {
             return ;
+        }
+    });
+
+    document.addEventListener('keypress', function(event) {
+        // Check if the pressed key is Enter (key code 13)
+        if (event.keyCode === 13) {
+            // Trigger a click event on the submit button
+            document.querySelector('.submit-button').click();
         }
     });
 
@@ -35,3 +45,4 @@ function initializeGame() {
 
 // Call the initializeGame function when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initializeGame); 
+
