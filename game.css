@@ -93,8 +93,10 @@ h1 {
     justify-content: flex-start; /* Align content to the top */
     align-items: center;
     margin-top: 5%; /* Adjust margin to create space between grids */
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .number-grid {
