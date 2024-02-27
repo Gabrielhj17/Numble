@@ -1,10 +1,11 @@
 // Function to initialize the game
 function initializeGame() {
-// Generate a random 4-digit number
+    // Generate a random 4-digit number
     const randomNumber = generateRandomNumber();
 
     const rows = document.querySelectorAll('.grid-row');
     const submitButton = document.querySelector('.submit-button');
+    const numberButtons = document.querySelectorAll('.number-box');
 
     // Add input event listeners to limit character input
     rows.forEach(row => {
@@ -23,11 +24,15 @@ function initializeGame() {
             const nextRow = activeRow.nextElementSibling || rows[0];
             updateBoxColors(activeRow, randomNumber);
             enableEditingForRow(nextRow);
-            const firstBox = element.parentElement.children[0];
+            const firstBox = nextRow.querySelector('.box');
             firstBox.focus();
+            // For iOS devices, explicitly set the input mode to numeric for the first box
+            if (/iPad|iPhone|iPod/.test(navigator.platform)) {
+                firstBox.setAttribute('inputmode', 'numeric');
+            }
         }
         else {
-            return ;
+            return;
         }
     });
 
@@ -44,4 +49,4 @@ function initializeGame() {
 }
 
 // Call the initializeGame function when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initializeGame); 
+document.addEventListener('DOMContentLoaded', initializeGame);

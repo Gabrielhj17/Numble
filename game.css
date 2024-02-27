@@ -128,8 +128,16 @@ h1 {
     }
 }
 
-/* Ensure content scales properly on mobile devices */
 @viewport {
     width: device-width;
-    zoom: 1.0;
+    initial-scale: 1.0; /* Adjust initial scale as needed */
+    user-scalable: yes; /* Enable user scaling */
+}
+
+/* Adjust grid layout for smaller screens */
+@media screen and (max-width: 768px) {
+    .number-grid {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(2, 100px);
+    }
 }
