@@ -10,5 +10,8 @@ function moveCursor(element, nextIndex) {
         sel.addRange(range);
         nextBox.focus();
     }
+    if (/iPad|iPhone|iPod/.test(navigator.platform)) {
+        firstBox.setAttribute('inputmode', 'numeric');
+    }
 }
 

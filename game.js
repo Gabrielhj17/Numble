@@ -26,10 +26,6 @@ function initializeGame() {
             enableEditingForRow(nextRow);
             const firstBox = nextRow.querySelector('.box');
             firstBox.focus();
-            // For iOS devices, explicitly set the input mode to numeric for the first box
-            if (/iPad|iPhone|iPod/.test(navigator.platform)) {
-                firstBox.setAttribute('inputmode', 'numeric');
-            }
         }
         else {
             return;
