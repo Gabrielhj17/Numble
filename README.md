@@ -2,8 +2,6 @@
 
 Numble is a number-guessing game inspired by Wordle. Players attempt to guess a 4-digit number through deductive reasoning and feedback on each guess.
 
-![Numble Game Screenshot](screenshot.png)
-
 ## How to Play
 
 1. The game randomly generates a 4-digit number with no repeated digits
@@ -46,7 +44,6 @@ Numble is built with vanilla JavaScript, HTML5, and CSS3. The game features:
 - `index.html` - Main game HTML structure
 - `game.css` - Styling for the game
 - `game.js` - Main game logic and functionality
-- `dependencies.js` - Handles JavaScript file imports
 
 ## Browser Compatibility
 
