@@ -1,7 +1,6 @@
-// game.js - Complete implementation for Numble game
-
 // Global variables
 let targetNumber; // The 4-digit number to guess
+let isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 // Function to initialize the game
 function initializeGame() {
@@ -19,10 +18,38 @@ function initializeGame() {
     // Disable all rows initially
     rows.forEach(row => {
         row.querySelectorAll('.box').forEach(box => {
-            box.setAttribute('contenteditable', 'false');
+            if (!isMobileDevice) {
+                box.setAttribute('contenteditable', 'false');
+            } else {
+                // For mobile: make boxes non-editable to prevent keyboard
+                box.setAttribute('contenteditable', 'false');
+            }
         });
         row.classList.remove('editable-row');
     });
+    
+    // Mobile-specific setup
+    if (isMobileDevice) {
+        // Add click handlers to boxes for mobile
+        rows.forEach(row => {
+            row.querySelectorAll('.box').forEach(box => {
+                box.addEventListener('click', function() {
+                    // Only allow clicking in editable row
+                    if (!box.parentElement.classList.contains('editable-row')) {
+                        return;
+                    }
+                    
+                    // Remove focused class from all boxes
+                    document.querySelectorAll('.box').forEach(b => {
+                        b.classList.remove('focused');
+                    });
+                    
+                    // Add focused class to this box
+                    this.classList.add('focused');
+                });
+            });
+        });
+    }
     
     // Set up number button functionality
     numberButtons.forEach(button => {
@@ -31,29 +58,75 @@ function initializeGame() {
             const activeRow = document.querySelector('.grid-row.editable-row');
             
             if (activeRow) {
-                // Find the first empty box or the first box if all are filled
-                let targetBox = null;
-                const boxes = activeRow.querySelectorAll('.box');
-                for (let i = 0; i < boxes.length; i++) {
-                    if (!boxes[i].textContent.trim()) {
-                        targetBox = boxes[i];
-                        break;
-                    }
-                }
-                
-                // If no empty box found, select the first box
-                if (!targetBox && boxes.length > 0) {
-                    targetBox = boxes[0];
-                }
-                
-                if (targetBox) {
-                    targetBox.textContent = number;
-                    // Trigger the limitCharacter function
-                    const event = new Event('input', { bubbles: true });
-                    targetBox.dispatchEvent(event);
+                if (isMobileDevice) {
+                    // Mobile handling - use focused class
+                    let targetBox = document.querySelector('.grid-row.editable-row .box.focused');
                     
-                    // Check if row is complete to enable submit button
-                    updateSubmitButton();
+                    // If no box is focused, focus the first empty box
+                    if (!targetBox) {
+                        const emptyBoxes = Array.from(activeRow.querySelectorAll('.box'))
+                            .filter(box => !box.textContent.trim());
+                        
+                        if (emptyBoxes.length > 0) {
+                            targetBox = emptyBoxes[0];
+                            document.querySelectorAll('.box').forEach(b => {
+                                b.classList.remove('focused');
+                            });
+                            targetBox.classList.add('focused');
+                        } else {
+                            // If no empty box, focus the first box
+                            targetBox = activeRow.querySelector('.box');
+                            document.querySelectorAll('.box').forEach(b => {
+                                b.classList.remove('focused');
+                            });
+                            targetBox.classList.add('focused');
+                        }
+                    }
+                    
+                    if (targetBox) {
+                        targetBox.textContent = number;
+                        
+                        // Find the next box to focus
+                        const boxes = Array.from(activeRow.querySelectorAll('.box'));
+                        const currentIndex = boxes.indexOf(targetBox);
+                        
+                        if (currentIndex < boxes.length - 1) {
+                            targetBox.classList.remove('focused');
+                            boxes[currentIndex + 1].classList.add('focused');
+                        }
+                        
+                        // Update submit button state
+                        updateSubmitButton();
+                    }
+                } else {
+                    // Desktop handling - use contenteditable
+                    // Find the first empty box or the first box if all are filled
+                    let targetBox = null;
+                    const boxes = activeRow.querySelectorAll('.box');
+                    for (let i = 0; i < boxes.length; i++) {
+                        if (!boxes[i].textContent.trim()) {
+                            targetBox = boxes[i];
+                            break;
+                        }
+                    }
+                    
+                    // If no empty box found, select the first box
+                    if (!targetBox && boxes.length > 0) {
+                        targetBox = boxes[0];
+                    }
+                    
+                    if (targetBox) {
+                        targetBox.textContent = number;
+                        
+                        // Find the index for moving cursor
+                        const boxIndex = Array.from(boxes).indexOf(targetBox);
+                        if (boxIndex < boxes.length - 1) {
+                            moveCursor(targetBox, boxIndex + 1);
+                        }
+                        
+                        // Check if row is complete to enable submit button
+                        updateSubmitButton();
+                    }
                 }
             }
         });
@@ -91,9 +164,12 @@ function initializeGame() {
             
             if (nextRow) {
                 enableEditingForRow(nextRow);
-                // Focus on first box of next row
-                const firstBox = nextRow.querySelector('.box');
-                if (firstBox) firstBox.focus();
+                
+                // Focus on first box of next row (desktop only)
+                if (!isMobileDevice) {
+                    const firstBox = nextRow.querySelector('.box');
+                    if (firstBox) firstBox.focus();
+                }
             } else {
                 // Game over - no more rows
                 setTimeout(() => {
@@ -136,6 +212,11 @@ function disableAllRows() {
         disableEditingForRow(row);
     });
     
+    // Remove all focused boxes
+    document.querySelectorAll('.box').forEach(box => {
+        box.classList.remove('focused');
+    });
+    
     // Disable submit button
     const submitButton = document.querySelector('.submit-button');
     if (submitButton) submitButton.disabled = true;
@@ -156,10 +237,17 @@ function limitCharacter(element, currentIndex, nextIndex) {
     }
     
     // Move cursor to next box if possible
-    moveCursor(element, nextIndex);
+    if (!isMobileDevice) {
+        moveCursor(element, nextIndex);
+    }
     
     // Update submit button state
     updateSubmitButton();
+    
+    // Prevent keyboard from showing on mobile
+    if (isMobileDevice) {
+        element.blur(); // Remove focus to hide keyboard
+    }
 }
 
 // Function to move cursor to the next box
@@ -168,24 +256,31 @@ function moveCursor(element, nextIndex) {
     if (element.textContent.length === 1 && nextIndex < element.parentElement.children.length) {
         const nextBox = element.parentElement.children[nextIndex];
         if (nextBox) {
-            nextBox.focus();
-            
-            // Place cursor at the end of content in the next box
-            if (document.createRange && window.getSelection) {
-                const range = document.createRange();
-                const sel = window.getSelection();
+            if (isMobileDevice) {
+                // For mobile: update visual focus without triggering keyboard
+                element.classList.remove('focused');
+                nextBox.classList.add('focused');
+            } else {
+                // For desktop: actually focus the element
+                nextBox.focus();
                 
-                // Try to position at the end of any content
-                if (nextBox.childNodes.length > 0) {
-                    const lastNode = nextBox.childNodes[nextBox.childNodes.length - 1];
-                    range.setStartAfter(lastNode);
-                } else {
-                    range.selectNodeContents(nextBox);
+                // Place cursor at the end of content in the next box
+                if (document.createRange && window.getSelection) {
+                    const range = document.createRange();
+                    const sel = window.getSelection();
+                    
+                    // Try to position at the end of any content
+                    if (nextBox.childNodes.length > 0) {
+                        const lastNode = nextBox.childNodes[nextBox.childNodes.length - 1];
+                        range.setStartAfter(lastNode);
+                    } else {
+                        range.selectNodeContents(nextBox);
+                    }
+                    
+                    range.collapse(false); // false means collapse to end
+                    sel.removeAllRanges();
+                    sel.addRange(range);
                 }
-                
-                range.collapse(false); // false means collapse to end
-                sel.removeAllRanges();
-                sel.addRange(range);
             }
         }
     }
@@ -214,9 +309,23 @@ function enableEditingForRow(row) {
     if (!row) return;
     
     row.querySelectorAll('.box').forEach(box => {
-        box.setAttribute('contenteditable', 'true');
+        if (!isMobileDevice) {
+            box.setAttribute('contenteditable', 'true');
+        }
+        // We don't make boxes contenteditable on mobile to prevent keyboard
     });
     row.classList.add('editable-row');
+    
+    // For mobile, add focused class to first box
+    if (isMobileDevice) {
+        const firstBox = row.querySelector('.box');
+        if (firstBox) {
+            document.querySelectorAll('.box').forEach(b => {
+                b.classList.remove('focused');
+            });
+            firstBox.classList.add('focused');
+        }
+    }
 }
 
 // Function to disable editing for a row
@@ -225,6 +334,7 @@ function disableEditingForRow(row) {
     
     row.querySelectorAll('.box').forEach(box => {
         box.setAttribute('contenteditable', 'false');
+        box.classList.remove('focused');
     });
     row.classList.remove('editable-row');
 }
